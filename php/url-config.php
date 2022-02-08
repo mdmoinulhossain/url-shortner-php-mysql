@@ -13,7 +13,22 @@ if(!empty($full_url) && filter_var($full_url, FILTER_VALIDATE_URL)){
     if(mysqli_num_rows($sql) > 0) {
         echo "Something is wrong. Please Regenerate url Again!";
     } else {
+        // Insert user typed url into table with short url
+        $sql2 = mysqli_query($conn, "INSERT INTO url (short_url, full_url, clicks)
+                                    VALUES ('{$ran_url}', '{$full_url}', '0')");
 
+        if($sql2){ // If inserted data successfully
+
+            // selecting recently inserted short links            
+            $sql3 = mysqli_query($conn, "SELECT short_url FROM url WHERE short_url = '{$ran_url}'");
+
+            if(mysqli_num_rows($sql3) > 0){
+                $shortener_url = mysqli_fetch_assos($sql3);
+                echo $shortener_url['short_url'];
+            }
+        } else {
+            echo "Something is wrong";
+        }
     }
 } else {
     echo "$full_url - This is Invalid URL";
