@@ -23,7 +23,7 @@ if(!empty($full_url) && filter_var($full_url, FILTER_VALIDATE_URL)){
             $sql3 = mysqli_query($conn, "SELECT short_url FROM url WHERE short_url = '{$ran_url}'");
 
             if(mysqli_num_rows($sql3) > 0){
-                $shortener_url = mysqli_fetch_assos($sql3);
+                $shortener_url = mysqli_fetch_assoc($sql3);
                 echo $shortener_url['short_url'];
             }
         } else {
